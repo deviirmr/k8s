@@ -1,0 +1,20 @@
+name: Build docker container & push to DO Registry
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test_django:
+    uses: k8s/tree/main/.github/workflows/test-django.yaml@main
+  
+  docker_buils:
+    runs-on: ubuntu-latest
+    env:
+      DJANGO_SECRET_KEY: its-just-a-test-key-cool
+    steps:
+    - uses: actions/checkout@v3
