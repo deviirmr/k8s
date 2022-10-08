@@ -10,7 +10,7 @@ on:
 
 jobs:
   test_django:
-    uses: k8s/tree/main/.github/workflows/test-django.yaml@main
+    uses: deviirmr/k8s/.github/workflows/test-django.yaml@main
   
   docker_buils:
     runs-on: ubuntu-latest
