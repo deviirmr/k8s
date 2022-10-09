@@ -46,3 +46,7 @@ Then run migrate.sh
 
 kubectl exec -it $SINGLE_POD_NAME -- bash /app/migrate.sh
 '''
+
+#git hub action
+Image Update:
+kubectl set image deploymentdjango-k8s-web-deployment django-k8s-web=registry.digitalocean.com/cfe-k8s-deb/django-k8s-web:latest
