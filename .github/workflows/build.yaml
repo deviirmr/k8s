@@ -12,10 +12,33 @@ jobs:
   test_django_job:
     uses: deviirmr/k8s/.github/workflows/test-django.yaml@main
   
-  docker_buils:
+  build:
     runs-on: ubuntu-latest
     needs: [test_django_job]
     env:
       DJANGO_SECRET_KEY: its-just-a-test-key-cool
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
+      #https://github.com/digitalocean/action-doctl
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DO_API_TOKEN_KEY }}
+    - name: Login to DO Contaner Regidtry with short-lived credit
+      run: doctl registry login --expiry-seconds 1200
+    - name: Build  contain image
+      working-directory: ./web
+      run: |
+        docker build -f Dockerfile \
+          -t registry.digitalocean.com/cfe-k8s-deb/django-k8s-web:latest \
+          -t registry.digitalocean.com/cfe-k8s-deb/django-k8s-web:${GITHUB_SHA::7} \
+          .
+    - name : Push image
+      run: |
+        docker push registry.digitalocean.com/cfe-k8s-deb/django-k8s-web --all-tags 
+          .
+
+
+
+    
