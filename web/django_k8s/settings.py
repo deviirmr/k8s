@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
+
 ]
 
 MIDDLEWARE = [
@@ -149,28 +151,31 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-##########################################################
-STATICFILES_DIRS = [
-
-    Path.joinpath(BASE_DIR, 'static')
-]
-
-STATIC_URL = '/static/'
-STATIC_ROOT = Path.joinpath(BASE_DIR, 'static_cnd')
-
-# Devlopemnt  move the media folder to static
-MEDIA_URL = '/media/'
-MEDIA_ROOT = Path.joinpath(BASE_DIR, 'static/media')
-
-##Production setting move the media folder to root
-# MEDIA_URL='/media/'
-# MEDIA_ROOT=os.path.join(BASE_DIR,'media')
-########################################################
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
+
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+##########################################################
+
+
+STATIC_URL = '/static/'
+#its static file storage dieing production or debug false
+STATIC_ROOT = Path.joinpath(BASE_DIR, 'staticfiles-cdn')
+
+#its static file storage during devlopment or debug true
+STATICFILES_DIRS = [
+
+    Path.joinpath(BASE_DIR, 'staticfiles')
+]
+
+from .cdn.conf import * #noqa
+
+
+########################################################
