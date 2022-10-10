@@ -2,4 +2,4 @@
 
 cd /app/
 
-/opt/venv/bin/python manage.py collectstatic --noinputs
+/opt/venv/bin/python manage.py collectstatic --noinput
